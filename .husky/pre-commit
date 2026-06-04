@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "🔍 Running Biome check..."
+bun biome check --write --staged --no-errors-on-unmatched
+
+echo "📦 Adding fixed files to stage..."
+git add .
+
+echo "✅ Pre-commit checks passed!"
