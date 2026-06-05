@@ -1,0 +1,13 @@
+#!/bin/sh
+echo "📝 Checking commit message format..."
+
+bunx commitlint --edit $1
+
+if [ $? -ne 0 ]; then
+    echo "❌ Commit message format is invalid!"
+    echo "💡 Use conventional commit format: type(scope): description"
+    echo "   Example: feat: add new habit component"
+    exit 1
+fi
+
+echo "✅ Commit message is valid!"
