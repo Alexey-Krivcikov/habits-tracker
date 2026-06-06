@@ -13,6 +13,9 @@
     "formatter": {
       "quoteStyle": "double",
       "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "bracketSpacing": true,
       "lineWidth": 120
     }
   },
