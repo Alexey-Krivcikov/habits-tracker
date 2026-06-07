@@ -6,5 +6,5 @@ export const successEntries = pgTable("success_entries", {
   achievement: text().notNull(),
   emotion: text().notNull(),
   thought: text().notNull(),
-  createdAt: timestamp().defaultNow().notNull(),
+  createdAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
 });

@@ -4,5 +4,5 @@ CREATE TABLE "success_entries" (
 	"achievement" text NOT NULL,
 	"emotion" text NOT NULL,
 	"thought" text NOT NULL,
-	"createdAt" timestamp DEFAULT now() NOT NULL
+	"createdAt" timestamp with time zone DEFAULT now() NOT NULL
 );
