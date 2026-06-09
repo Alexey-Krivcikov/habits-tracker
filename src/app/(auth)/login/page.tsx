@@ -1,101 +1,80 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button, Group, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
-import { signIn, signUp } from "@/auth/client";
+import { useForm } from "react-hook-form";
+import { type AuthFormValues, authSchema } from "@/auth/schemas";
+import { useLogin, useRegister } from "@/shared/api/auth";
 
 export default function AuthPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"login" | "register">("register");
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const loginMutation = useLogin();
+  const registerMutation = useRegister();
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthFormValues>({
+    resolver: zodResolver(authSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    try {
-      // biome-ignore lint/suspicious/noImplicitAnyLet: for test
-      let res;
-
-      if (mode === "register") {
-        res = await signUp.email({
-          email,
-          password,
-          name: "Alex",
-        });
-      } else {
-        res = await signIn.email({
-          email,
-          password,
-        });
-      }
-
-      if (res.error) {
-        setError(res.error.message || "Something went wrong");
-        return;
-      }
-
-      console.log("SUCCESS:", res.data);
-      // biome-ignore lint/suspicious/noExplicitAny: for test
-    } catch (e: any) {
-      setError(e?.message || "Unexpected error");
-    } finally {
-      setLoading(false);
+  const onSubmit = (values: AuthFormValues) => {
+    if (mode === "register") {
+      registerMutation.mutate({
+        ...values,
+        name: "Alex",
+      });
+      return;
     }
+
+    loginMutation.mutate(values);
   };
 
+  const error = loginMutation.error?.message ?? registerMutation.error?.message;
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <Paper shadow="md" p="xl" radius="md" w={360}>
-        <Stack gap="md">
-          <Title order={2} ta="center">
-            {mode === "register" ? "Create account" : "Welcome back"}
-          </Title>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack gap="md">
+            <Title ta="center">{mode === "register" ? "Create account" : "Welcome back"}</Title>
 
-          {error && (
-            <Alert color="red" title="Auth error">
-              {error}
-            </Alert>
-          )}
+            {error && <Alert color="red">{error}</Alert>}
 
-          <TextInput
-            label="Email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={error?.toLowerCase().includes("email") ? error : undefined}
-          />
+            <TextInput
+              label="Email"
+              placeholder="you@example.com"
+              {...register("email")}
+              error={errors.email?.message}
+            />
 
-          <PasswordInput
-            label="Password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={error?.toLowerCase().includes("password") ? error : undefined}
-          />
+            <PasswordInput
+              label="Password"
+              placeholder="••••••••"
+              {...register("password")}
+              error={errors.password?.message}
+            />
 
-          <Button onClick={handleSubmit} loading={loading} fullWidth>
-            {mode === "register" ? "Sign up" : "Sign in"}
-          </Button>
-
-          <Group justify="center">
-            <Text size="sm">{mode === "register" ? "Already have an account?" : "Don't have an account?"}</Text>
-
-            <Button variant="subtle" size="xs" onClick={() => setMode(mode === "register" ? "login" : "register")}>
-              {mode === "register" ? "Login" : "Register"}
+            <Button type="submit" loading={loginMutation.isPending || registerMutation.isPending} fullWidth>
+              {mode === "register" ? "Sign up" : "Sign in"}
             </Button>
-          </Group>
-        </Stack>
+
+            <Group justify="center">
+              <Text size="sm">{mode === "register" ? "Already have an account?" : "Don't have an account?"}</Text>
+
+              <Button variant="subtle" size="xs" onClick={() => setMode(mode === "register" ? "login" : "register")}>
+                {mode === "register" ? "Login" : "Register"}
+              </Button>
+            </Group>
+          </Stack>
+        </form>
       </Paper>
     </div>
   );
