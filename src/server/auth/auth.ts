@@ -1,7 +1,7 @@
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { betterAuth } from "better-auth";
-import { db } from "@/db";
-import * as schema from "@/db/schema";
+import { db } from "@/server/db";
+import * as schema from "@/server/db/schema";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -12,6 +12,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  secret: process.env.BETTER_AUTH_SECRET || "your-secret-key",
-  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+
+  secret: process.env.BETTER_AUTH_SECRET ?? "",
+  baseURL: process.env.NEXT_PUBLIC_APP_URL ?? "",
 });

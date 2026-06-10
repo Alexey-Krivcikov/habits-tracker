@@ -1,20 +1,12 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { signIn, signUp } from "@/auth/client";
-
-type LoginPayload = {
-  email: string;
-  password: string;
-};
-
-type RegisterPayload = LoginPayload & {
-  name: string;
-};
+import { signIn, signUp } from "@/features/auth/services";
+import type { LoginFormValues, RegisterFormValues } from "../schemas";
 
 export function useLogin() {
   return useMutation({
-    mutationFn: async (payload: LoginPayload) => {
+    mutationFn: async (payload: LoginFormValues) => {
       const result = await signIn.email(payload);
 
       if (result.error) {
@@ -28,7 +20,7 @@ export function useLogin() {
 
 export function useRegister() {
   return useMutation({
-    mutationFn: async (payload: RegisterPayload) => {
+    mutationFn: async (payload: RegisterFormValues) => {
       const result = await signUp.email(payload);
 
       if (result.error) {

@@ -4,8 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button, Group, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { type AuthFormValues, authSchema } from "@/auth/schemas";
-import { useLogin, useRegister } from "@/shared/api/auth";
+import { type AuthFormValues, authSchema, useLogin, useRegister } from "@/features";
 
 export default function AuthPage() {
   const [mode, setMode] = useState<"login" | "register">("register");
