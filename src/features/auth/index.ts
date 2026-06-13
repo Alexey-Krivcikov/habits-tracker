@@ -1,7 +1,5 @@
 export { useLogin, useRegister } from "./hooks";
 export {
-  type AuthFormValues,
-  authSchema,
   type LoginFormValues,
   loginSchema,
   type RegisterFormValues,

@@ -4,27 +4,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button, Group, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { type AuthFormValues, authSchema, useLogin, useRegister } from "@/features";
+import { type LoginFormValues, loginSchema, type RegisterFormValues, useLogin, useRegister } from "@/features";
 
 export default function AuthPage() {
   const [mode, setMode] = useState<"login" | "register">("register");
 
   const loginMutation = useLogin();
   const registerMutation = useRegister();
+  const error = loginMutation.error?.message ?? registerMutation.error?.message;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthFormValues>({
-    resolver: zodResolver(authSchema),
+  } = useForm<RegisterFormValues | LoginFormValues>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: AuthFormValues) => {
+  const onSubmit = (values: RegisterFormValues | LoginFormValues) => {
     if (mode === "register") {
       registerMutation.mutate({
         ...values,
@@ -35,8 +36,6 @@ export default function AuthPage() {
 
     loginMutation.mutate(values);
   };
-
-  const error = loginMutation.error?.message ?? registerMutation.error?.message;
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
