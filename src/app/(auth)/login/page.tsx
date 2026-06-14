@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Button, Group, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
+import { Alert, Button, Flex, Group, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { type LoginFormValues, loginSchema, type RegisterFormValues, useLogin, useRegister } from "@/features";
@@ -38,7 +38,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <Flex align="center" justify="center" mih="100dvh">
       <Paper shadow="md" p="xl" radius="md" w={360}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack gap="md">
@@ -74,6 +74,6 @@ export default function AuthPage() {
           </Stack>
         </form>
       </Paper>
-    </div>
+    </Flex>
   );
 }
