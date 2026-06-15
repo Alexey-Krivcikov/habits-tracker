@@ -1,17 +1,27 @@
 "use client";
 
-import { Button, Stack, Text, Title, useMantineColorScheme } from "@mantine/core";
+import { Button, Container, Group, Stack, Text, Title } from "@mantine/core";
+import Link from "next/link";
 
 export default function Home() {
-  const { colorScheme, setColorScheme } = useMantineColorScheme();
-
   return (
-    <Stack align="center" justify="center" h="100vh">
-      <Title>Success Journal</Title>
+    <Container size="md">
+      <Stack mih="calc(100dvh - 60px)" align="center" justify="center" gap="xl">
+        <Title order={1} ta="center">
+          Дневник успеха
+        </Title>
 
-      <Text c="dimmed">Mantine is working 🚀</Text>
+        <Text size="lg" c="dimmed" ta="center" maw={600}>
+          Записывайте свои достижения, эмоции и мысли каждый день. Формируйте здоровую самооценку через практику
+          дневника успеха.
+        </Text>
 
-      <Button onClick={() => setColorScheme(colorScheme === "dark" ? "light" : "dark")}>Click me</Button>
-    </Stack>
+        <Group>
+          <Button component={Link} href="/login" size="md">
+            Начать
+          </Button>
+        </Group>
+      </Stack>
+    </Container>
   );
 }

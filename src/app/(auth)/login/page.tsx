@@ -38,13 +38,13 @@ export default function AuthPage() {
   };
 
   return (
-    <Flex align="center" justify="center" mih="100dvh">
+    <Flex align="center" justify="center" flex="1 0 0">
       <Paper shadow="md" p="xl" radius="md" w={360}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack gap="md">
-            <Title ta="center">{mode === "register" ? "Create account" : "Welcome back"}</Title>
+            <Title ta="center">{mode === "register" ? "Создание аккаунта" : "С возвращением"}</Title>
 
-            {error && <Alert color="red">{error}</Alert>}
+            {error && <Alert color="red">Ошибка авторизации: {error}</Alert>}
 
             <TextInput
               label="Email"
@@ -54,21 +54,21 @@ export default function AuthPage() {
             />
 
             <PasswordInput
-              label="Password"
+              label="Пароль"
               placeholder="••••••••"
               {...register("password")}
               error={errors.password?.message}
             />
 
             <Button type="submit" loading={loginMutation.isPending || registerMutation.isPending} fullWidth>
-              {mode === "register" ? "Sign up" : "Sign in"}
+              {mode === "register" ? "Зарегистрироваться" : "Войти"}
             </Button>
 
             <Group justify="center">
-              <Text size="sm">{mode === "register" ? "Already have an account?" : "Don't have an account?"}</Text>
+              <Text size="sm">{mode === "register" ? "Уже есть аккаунт?" : "Нет аккаунта?"}</Text>
 
               <Button variant="subtle" size="xs" onClick={() => setMode(mode === "register" ? "login" : "register")}>
-                {mode === "register" ? "Login" : "Register"}
+                {mode === "register" ? "Войти" : "Регистрация"}
               </Button>
             </Group>
           </Stack>
