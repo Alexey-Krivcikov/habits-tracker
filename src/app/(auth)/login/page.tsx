@@ -39,7 +39,7 @@ export default function AuthPage() {
 
   return (
     <Flex align="center" justify="center" flex="1 0 0">
-      <Paper shadow="md" p="xl" radius="md" w={360}>
+      <Paper shadow="md" p="xl" radius="md" w={420}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack gap="md">
             <Title ta="center">{mode === "register" ? "Создание аккаунта" : "С возвращением"}</Title>

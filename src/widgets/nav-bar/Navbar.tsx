@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/shared/ui";
 
 export function Navbar() {
   return (
-    <Container size="lg" h={60}>
+    <Container w="100%" maw="100%" h={60} px="xl">
       <Group h="100%" justify="space-between">
         <Link href="/" style={{ textDecoration: "none" }}>
           <Button variant="subtle">📔 Дневник успеха</Button>
