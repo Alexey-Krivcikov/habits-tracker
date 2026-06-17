@@ -8,7 +8,6 @@ import { type LoginFormValues, loginSchema, type RegisterFormValues, useLogin, u
 
 export default function AuthPage() {
   const [mode, setMode] = useState<"login" | "register">("register");
-
   const loginMutation = useLogin();
   const registerMutation = useRegister();
   const error = loginMutation.error?.message ?? registerMutation.error?.message;
