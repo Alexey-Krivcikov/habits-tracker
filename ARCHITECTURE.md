@@ -1,16 +1,5 @@
 # Architecture Guide - Масштабируемая структура для Habits Tracker
 
-## Current Structure vs Recommended
-
-### Текущая структура (простая)
-```
-src/
-├── app/              (только несколько страниц)
-├── auth/             (с конфигом Better Auth)
-├── db/               (схема БД)
-└── shared/           (провайдеры + API)
-```
-
 ### Рекомендуемая структура (для масштабирования)
 ```
 src/
@@ -255,32 +244,6 @@ export async function createEntryService(data) {
 }
 ```
 
-## Пошаговая миграция
-
-### Шаг 1: Создать структуру papок
-```bash
-mkdir -p src/features/{auth,entries,common}
-mkdir -p src/features/{auth,entries}/{components,hooks,schemas,services,types}
-mkdir -p src/server/db
-mkdir -p src/shared/{api,constants,lib,config,types,hooks}
-```
-
-### Шаг 2: Перенести код
-1. `src/auth/auth.ts` → `src/auth/auth.ts` (оставить как есть)
-2. `src/db/` → `src/server/db/`
-3. `src/shared/api/auth/mutations.ts` → `src/features/auth/hooks/`
-4. `useLogin()`, `useRegister()` → `src/features/auth/hooks/index.ts`
-5. Validation schemas → `src/features/auth/schemas/`
-6. Components → создать `src/features/auth/components/`
-
-### Шаг 3: Добавить index.ts в каждый домен
-```typescript
-// src/features/auth/index.ts - публичное API домена
-export * from "./components";
-export * from "./hooks";
-export { type AuthFormValues } from "./schemas";
-```
-
 ## Правила Импортов
 
 ```typescript
@@ -371,9 +334,7 @@ export const env = envSchema.parse(process.env);
 
 ## Дополнительные улучшения (для будущего)
 
-1. **Монорепо со Turbo** - если несколько приложений
-2. **Shared UI Library** - если много приватных компонентов
-3. **API Contract Testing** - если backend отдельный
-4. **Feature Flags** - управление фичами
-5. **Storybook** - документация компонентов
+1. **Shared UI Library** - если много приватных компонентов
+2. **Feature Flags** - управление фичами
+3. **Storybook** - документация компонентов
 
