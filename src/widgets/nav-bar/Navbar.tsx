@@ -11,6 +11,9 @@ export function Navbar() {
         <Link href="/" style={{ textDecoration: "none" }}>
           <Button variant="subtle">📔 Дневник успеха</Button>
         </Link>
+        <Link href="/habits" style={{ textDecoration: "none" }}>
+          <Button variant="subtle">📔 Привычки</Button>
+        </Link>
 
         <Group>
           <ThemeToggle />
