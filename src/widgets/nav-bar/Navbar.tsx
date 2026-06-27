@@ -9,16 +9,16 @@ export function Navbar() {
     <Container w="100%" maw="100%" h={60} px="xl">
       <Group h="100%" justify="space-between">
         <Link href="/" style={{ textDecoration: "none" }}>
-          <Button variant="subtle">📔 Дневник успеха</Button>
+          <Button variant="subtle">📔 Главная</Button>
         </Link>
-        <Link href="/habits" style={{ textDecoration: "none" }}>
-          <Button variant="subtle">📔 Привычки</Button>
+        <Link href="/entries/list" style={{ textDecoration: "none" }}>
+          <Button variant="subtle">📝 Дневник успеха</Button>
         </Link>
 
         <Group>
           <ThemeToggle />
 
-          <Button component={Link} href="/auth" variant="default">
+          <Button component={Link} href="/login" variant="default">
             Войти
           </Button>
         </Group>
