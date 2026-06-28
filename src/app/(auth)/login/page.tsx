@@ -1,13 +1,25 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Button, Flex, Group, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
-import { useState } from "react";
+import { Alert, Button, Flex, Group, Loader, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { type LoginFormValues, loginSchema, type RegisterFormValues, useLogin, useRegister } from "@/features";
+import {
+  type LoginFormValues,
+  loginSchema,
+  type RegisterFormValues,
+  registerSchema,
+  useLogin,
+  useRegister,
+} from "@/features";
+import { useSession } from "@/features/auth/services";
 
 export default function AuthPage() {
+  const router = useRouter();
+  const { data: session, isPending: isSessionPending } = useSession();
   const [mode, setMode] = useState<"login" | "register">("register");
+
   const loginMutation = useLogin();
   const registerMutation = useRegister();
   const error = loginMutation.error?.message ?? registerMutation.error?.message;
@@ -17,24 +29,42 @@ export default function AuthPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormValues | LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(mode === "register" ? registerSchema : loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
+  useEffect(() => {
+    if (!isSessionPending && session?.user) {
+      router.replace("/entries/list");
+    }
+  }, [session, isSessionPending, router]);
+
+  const onLoginSuccess = () => router.push("/entries/list");
+  const onRegisterSuccess = () => router.push("/entries/list");
+
   const onSubmit = (values: RegisterFormValues | LoginFormValues) => {
     if (mode === "register") {
-      registerMutation.mutate({
-        ...values,
-        name: "Alex",
-      });
+      registerMutation.mutate({ ...values, name: values.email.split("@")[0] }, { onSuccess: onRegisterSuccess });
       return;
     }
 
-    loginMutation.mutate(values);
+    loginMutation.mutate(values, { onSuccess: onLoginSuccess });
   };
+
+  if (isSessionPending) {
+    return (
+      <Flex align="center" justify="center" flex="1 0 0">
+        <Loader />
+      </Flex>
+    );
+  }
+
+  if (session?.user) {
+    return null;
+  }
 
   return (
     <Flex align="center" justify="center" flex="1 0 0">
@@ -44,6 +74,15 @@ export default function AuthPage() {
             <Title ta="center">{mode === "register" ? "Создание аккаунта" : "С возвращением"}</Title>
 
             {error && <Alert color="red">Ошибка авторизации: {error}</Alert>}
+
+            {mode === "register" && (
+              <TextInput
+                label="Имя"
+                placeholder="Ваше имя"
+                {...register("name")}
+                error={"name" in errors ? errors.name?.message : undefined}
+              />
+            )}
 
             <TextInput
               label="Email"

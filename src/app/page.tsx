@@ -1,9 +1,22 @@
 "use client";
 
-import { Button, Container, Group, Stack, Text, Title } from "@mantine/core";
+import { Button, Container, Group, Loader, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
+import { useSession } from "@/features/auth/services";
 
 export default function Home() {
+  const { data: session, isPending } = useSession();
+
+  if (isPending) {
+    return (
+      <Container size="md">
+        <Stack mih="calc(100dvh - 60px)" align="center" justify="center">
+          <Loader />
+        </Stack>
+      </Container>
+    );
+  }
+
   return (
     <Container size="md">
       <Stack mih="calc(100dvh - 60px)" align="center" justify="center" gap="xl">
@@ -17,8 +30,8 @@ export default function Home() {
         </Text>
 
         <Group>
-          <Button component={Link} href="/login" size="md">
-            Начать
+          <Button component={Link} href={session?.user ? "/entries/list" : "/login"} size="md">
+            {session?.user ? "Перейти к записям" : "Начать"}
           </Button>
         </Group>
       </Stack>
