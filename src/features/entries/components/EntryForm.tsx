@@ -1,9 +1,45 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Button, Group, Stack, Textarea, Title } from "@mantine/core";
+import { Alert, Button, Divider, Group, Stack, Text, Textarea } from "@mantine/core";
+import { IconBrain, IconDeviceFloppy, IconHeart, IconMessages, IconStar } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
 import { type EntryFormValues, entrySchema, useCreateEntry } from "@/features";
+
+const fields = [
+  {
+    name: "situation" as const,
+    label: "Ситуация",
+    placeholder: "Что произошло? Опишите обстоятельства...",
+    icon: IconMessages,
+    step: "1/4",
+    hint: "Где и когда это случилось?",
+  },
+  {
+    name: "achievement" as const,
+    label: "Достижение",
+    placeholder: "Что вы сделали хорошо? Ваш успех...",
+    icon: IconStar,
+    step: "2/4",
+    hint: "Чем вы гордитесь в этой ситуации?",
+  },
+  {
+    name: "emotion" as const,
+    label: "Эмоция",
+    placeholder: "Что вы чувствовали?",
+    icon: IconHeart,
+    step: "3/4",
+    hint: "Радость, гордость, облегчение?",
+  },
+  {
+    name: "thought" as const,
+    label: "Мысль",
+    placeholder: "О чём вы думали в этот момент?",
+    icon: IconBrain,
+    step: "4/4",
+    hint: "Какие мысли пришли вам в голову?",
+  },
+] as const;
 
 interface EntryFormProps {
   onSuccess?: () => void;
@@ -34,52 +70,66 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
     onSuccess?.();
   };
 
+  const renderField = (field: (typeof fields)[number]) => {
+    const FieldIcon = field.icon;
+
+    return (
+      <div key={field.name}>
+        <Group gap="xs" mb={4}>
+          <FieldIcon size={18} stroke={1.5} />
+
+          <Text component="span" size="sm" fw={600}>
+            {field.step}
+          </Text>
+
+          <Text component="span" size="sm" c="dimmed">
+            {field.hint}
+          </Text>
+        </Group>
+
+        <Textarea
+          label={field.label}
+          placeholder={field.placeholder}
+          minRows={3}
+          autosize
+          {...register(field.name)}
+          error={errors[field.name]?.message}
+        />
+      </div>
+    );
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack gap="md">
-        <Title order={3}>Новая запись</Title>
-
+      <Stack gap="lg">
         {error && <Alert color="red">{error}</Alert>}
 
-        <Textarea
-          label="Ситуация"
-          placeholder="Что произошло? Опишите ситуацию..."
-          minRows={3}
-          autosize
-          {...register("situation")}
-          error={errors.situation?.message}
+        {renderField(fields[0])}
+        {renderField(fields[1])}
+
+        <Divider
+          label={
+            <Group gap="xs">
+              <IconHeart size={14} stroke={1.5} />
+              <Text size="sm" c="dimmed">
+                Как вы это пережили
+              </Text>
+            </Group>
+          }
+          labelPosition="center"
         />
 
-        <Textarea
-          label="Достижение"
-          placeholder="Что вы сделали хорошо? Ваш успех..."
-          minRows={3}
-          autosize
-          {...register("achievement")}
-          error={errors.achievement?.message}
-        />
+        {renderField(fields[2])}
+        {renderField(fields[3])}
 
-        <Textarea
-          label="Эмоция"
-          placeholder="Что вы чувствовали?"
-          minRows={2}
-          autosize
-          {...register("emotion")}
-          error={errors.emotion?.message}
-        />
-
-        <Textarea
-          label="Мысль"
-          placeholder="О чём вы думали в этот момент?"
-          minRows={3}
-          autosize
-          {...register("thought")}
-          error={errors.thought?.message}
-        />
-
-        <Group justify="flex-end">
-          <Button type="submit" loading={createEntryMutation.isPending}>
-            Сохранить
+        <Group justify="flex-end" mt="sm">
+          <Button
+            type="submit"
+            size="md"
+            loading={createEntryMutation.isPending}
+            leftSection={<IconDeviceFloppy size={18} />}
+          >
+            Сохранить запись
           </Button>
         </Group>
       </Stack>
