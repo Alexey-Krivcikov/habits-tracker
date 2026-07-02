@@ -19,6 +19,11 @@
       "lineWidth": 120
     }
   },
+  "css": {
+    "parser": {
+      "cssModules": true
+    }
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",

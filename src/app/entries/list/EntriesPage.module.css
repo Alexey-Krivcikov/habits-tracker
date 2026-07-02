@@ -6,25 +6,6 @@
   margin: 1rem auto 1.5rem;
 }
 
-.stepDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #f0b429;
-  flex-shrink: 0;
-}
-
-.stepCard {
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.stepCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
 .heroSection {
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -49,13 +30,12 @@
 }
 
 .iconBg {
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--mantine-radius-md);
-  flex-shrink: 0;
+  border-radius: var(--mantine-radius-lg);
 }
 
 :global([data-mantine-color-scheme="dark"]) .iconBg {

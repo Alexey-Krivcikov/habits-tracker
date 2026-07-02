@@ -128,6 +128,13 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
             size="md"
             loading={createEntryMutation.isPending}
             leftSection={<IconDeviceFloppy size={18} />}
+            styles={{
+              root: {
+                background: "#f0b429",
+                color: "#000",
+                "&:hover": { background: "#d49420" },
+              },
+            }}
           >
             Сохранить запись
           </Button>

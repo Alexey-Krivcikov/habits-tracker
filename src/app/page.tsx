@@ -33,12 +33,7 @@ export default function Home() {
 
     return (
       <>
-        <Box
-          style={{
-            background: "linear-gradient(180deg, var(--mantine-color-dark-8) 0%, transparent 100%)",
-            borderBottom: "1px solid var(--mantine-color-dark-5)",
-          }}
-        >
+        <Box className={styles.heroSection}>
           <Container size="sm" py={80}>
             <Stack align="center" gap={0}>
               <IconSparkles size={32} stroke={1.5} style={{ color: "#f0b429" }} />
@@ -89,12 +84,7 @@ export default function Home() {
 
   return (
     <>
-      <Box
-        style={{
-          background: "linear-gradient(180deg, var(--mantine-color-dark-8) 0%, transparent 100%)",
-          borderBottom: "1px solid var(--mantine-color-dark-5)",
-        }}
-      >
+      <Box className={styles.heroSection}>
         <Container size="sm" py={80}>
           <Stack align="center" gap={0}>
             <IconSparkles size={32} stroke={1.5} style={{ color: "#f0b429" }} />
@@ -171,17 +161,7 @@ export default function Home() {
 
               {steps.map(({ icon: Icon, label, desc }, i) => (
                 <Group key={label} gap="md" wrap="nowrap">
-                  <Flex
-                    w={40}
-                    h={40}
-                    align="center"
-                    justify="center"
-                    style={{
-                      borderRadius: "var(--mantine-radius-md)",
-                      background: "var(--mantine-color-dark-6)",
-                      flexShrink: 0,
-                    }}
-                  >
+                  <Flex className={styles.iconBg}>
                     <Icon size={20} stroke={1.5} />
                   </Flex>
 
@@ -205,6 +185,14 @@ export default function Home() {
               size="md"
               rightSection={<IconArrowRight size={18} />}
               variant="outline"
+              styles={{
+                root: {
+                  borderColor: "#f0b429",
+                  color: "#f0b429",
+                  "&:hover": { borderColor: "#d49420", color: "#d49420" },
+                },
+                section: { color: "#f0b429" },
+              }}
             >
               Войти и начать вести дневник
             </Button>
