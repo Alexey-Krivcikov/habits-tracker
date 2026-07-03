@@ -1,0 +1,31 @@
+.card {
+  box-shadow: var(--mantine-shadow-sm);
+  padding: var(--mantine-spacing-lg);
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-default-border);
+}
+
+.cardHeader {
+  justify-content: space-between;
+  margin-bottom: var(--mantine-spacing-md);
+}
+
+.fieldGroup {
+  column-gap: 6px;
+  margin-bottom: 2px;
+}
+
+.fieldLabel {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.fieldValue {
+  font-size: var(--mantine-font-size-sm);
+}
+
+.fieldsStack {
+  row-gap: var(--mantine-spacing-md);
+}

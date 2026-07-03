@@ -1,0 +1,39 @@
+.navbarContainer {
+  width: 100%;
+  max-width: 100%;
+  height: 60px;
+  padding-inline: var(--mantine-spacing-xl);
+}
+
+.navbarInner {
+  height: 100%;
+  justify-content: space-between;
+}
+
+.navLink {
+  text-decoration: none;
+}
+
+.userName {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+}
+
+.drawerStack {
+  row-gap: var(--mantine-spacing-xs);
+}
+
+.drawerButton {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.drawerDivider {
+  margin-block: var(--mantine-spacing-md);
+}
+
+.drawerUser {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+  padding-inline: var(--mantine-spacing-sm);
+}

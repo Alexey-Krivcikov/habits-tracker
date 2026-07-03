@@ -1,0 +1,13 @@
+.amberButton {
+  background: #f0b429;
+  color: #000;
+
+  &:hover {
+    background: #d49420;
+  }
+}
+
+.fieldHint {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+}

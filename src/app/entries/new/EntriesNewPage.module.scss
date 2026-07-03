@@ -1,0 +1,30 @@
+.pageContainer {
+  padding-block: var(--mantine-spacing-xl);
+}
+
+.headerGroup {
+  column-gap: var(--mantine-spacing-sm);
+}
+
+.headerTitle {
+  font-size: var(--mantine-font-size-h2);
+  font-weight: var(--mantine-h2-font-weight);
+  line-height: var(--mantine-h2-line-height);
+}
+
+.headerDesc {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+}
+
+.headerStack {
+  row-gap: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-xl);
+}
+
+.formCard {
+  box-shadow: var(--mantine-shadow-md);
+  padding: var(--mantine-spacing-xl);
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-default-border);
+}

@@ -14,6 +14,7 @@ import {
   useRegister,
 } from "@/features";
 import { useSession } from "@/features/auth/services";
+import styles from "./AuthPage.module.scss";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function AuthPage() {
 
   if (isSessionPending) {
     return (
-      <Flex align="center" justify="center" flex="1 0 0">
+      <Flex className={styles.pageFlex}>
         <Loader />
       </Flex>
     );
@@ -67,11 +68,11 @@ export default function AuthPage() {
   }
 
   return (
-    <Flex align="center" justify="center" flex="1 0 0">
-      <Paper shadow="md" p="xl" radius="md" w={420}>
+    <Flex className={styles.pageFlex}>
+      <Paper className={styles.formCard}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack gap="md">
-            <Title ta="center">{mode === "register" ? "Создание аккаунта" : "С возвращением"}</Title>
+          <Stack className={styles.formStack}>
+            <Title className={styles.formTitle}>{mode === "register" ? "Создание аккаунта" : "С возвращением"}</Title>
 
             {error && <Alert color="red">Ошибка авторизации: {error}</Alert>}
 
@@ -98,11 +99,15 @@ export default function AuthPage() {
               error={errors.password?.message}
             />
 
-            <Button type="submit" loading={loginMutation.isPending || registerMutation.isPending} fullWidth>
+            <Button
+              type="submit"
+              className={styles.submitButton}
+              loading={loginMutation.isPending || registerMutation.isPending}
+            >
               {mode === "register" ? "Зарегистрироваться" : "Войти"}
             </Button>
 
-            <Group justify="center">
+            <Group className={styles.toggleGroup}>
               <Text size="sm">{mode === "register" ? "Уже есть аккаунт?" : "Нет аккаунта?"}</Text>
 
               <Button variant="subtle" size="xs" onClick={() => setMode(mode === "register" ? "login" : "register")}>

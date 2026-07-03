@@ -3,6 +3,7 @@
 import { ActionIcon, Badge, Card, Group, Stack, Text } from "@mantine/core";
 import { IconBrain, IconHeart, IconMessages, IconStar, IconTrash } from "@tabler/icons-react";
 import type { Entry } from "@/features";
+import styles from "./EntryCard.module.scss";
 
 interface EntryCardProps {
   entry: Entry;
@@ -27,8 +28,8 @@ export function EntryCard({ entry, onDelete, isDeleting }: EntryCardProps) {
   });
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Group justify="space-between" mb="md">
+    <Card className={styles.card}>
+      <Group className={styles.cardHeader}>
         <Badge variant="light" color="gray" size="sm">
           {date}
         </Badge>
@@ -38,16 +39,14 @@ export function EntryCard({ entry, onDelete, isDeleting }: EntryCardProps) {
         </ActionIcon>
       </Group>
 
-      <Stack gap="md">
+      <Stack className={styles.fieldsStack}>
         {fieldMeta.map(({ key, label, icon: Icon }) => (
           <div key={key}>
-            <Group gap={6} mb={2}>
-              <Icon size={14} stroke={1.5} />
-              <Text size="xs" c="dimmed" tt="uppercase" fw={600}>
-                {label}
-              </Text>
+            <Group className={styles.fieldGroup}>
+              <Icon size={14} />
+              <Text className={styles.fieldLabel}>{label}</Text>
             </Group>
-            <Text size="sm">{entry[key]}</Text>
+            <Text className={styles.fieldValue}>{entry[key]}</Text>
           </div>
         ))}
       </Stack>

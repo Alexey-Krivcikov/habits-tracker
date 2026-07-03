@@ -4,24 +4,27 @@ import { Container, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { IconSparkles } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { EntryForm } from "@/features/entries";
+import styles from "./EntriesNewPage.module.scss";
 
 export default function NewEntryPage() {
   const router = useRouter();
 
   return (
-    <Container size="sm" py="xl">
-      <Stack gap="xs" mb="xl">
-        <Group gap="sm">
-          <IconSparkles size={28} stroke={1.5} />
-          <Title order={2}>Новая запись</Title>
+    <Container size="sm" className={styles.pageContainer}>
+      <Stack className={styles.headerStack}>
+        <Group className={styles.headerGroup}>
+          <IconSparkles size={28} />
+          <Title order={2} className={styles.headerTitle}>
+            Новая запись
+          </Title>
         </Group>
 
-        <Text c="dimmed" size="sm">
+        <Text className={styles.headerDesc}>
           Запишите свой успех — ситуацию, достижение, эмоцию и мысль. Это поможет закрепить позитивный опыт.
         </Text>
       </Stack>
 
-      <Paper shadow="md" p="xl" radius="md" withBorder>
+      <Paper className={styles.formCard}>
         <EntryForm onSuccess={() => router.push("/entries/list")} />
       </Paper>
     </Container>

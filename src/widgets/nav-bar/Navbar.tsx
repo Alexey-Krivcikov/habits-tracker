@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "@/features/auth/services";
 import { ThemeToggle } from "@/shared/ui";
+import styles from "./Navbar.module.scss";
 
 export function Navbar() {
   const router = useRouter();
@@ -20,20 +21,20 @@ export function Navbar() {
 
   return (
     <>
-      <Container w="100%" maw="100%" h={60} px="xl">
-        <Group h="100%" justify="space-between">
+      <Container className={styles.navbarContainer}>
+        <Group className={styles.navbarInner}>
           <Group>
             <Burger opened={opened} onClick={toggle} hiddenFrom="sm" />
 
             <Box visibleFrom="sm">
-              <Link href="/" style={{ textDecoration: "none" }}>
+              <Link href="/" className={styles.navLink}>
                 <Button variant="subtle">📔 Дневник успеха</Button>
               </Link>
             </Box>
 
             {session?.user && (
               <Box visibleFrom="sm">
-                <Link href="/entries/list" style={{ textDecoration: "none" }}>
+                <Link href="/entries/list" className={styles.navLink}>
                   <Button variant="subtle">📝 Мои записи</Button>
                 </Link>
               </Box>
@@ -47,9 +48,7 @@ export function Navbar() {
               <Loader size="sm" />
             ) : session?.user ? (
               <Group gap="sm" visibleFrom="sm">
-                <Text size="sm" c="dimmed">
-                  {session.user.name}
-                </Text>
+                <Text className={styles.userName}>{session.user.name}</Text>
 
                 <Button variant="default" onClick={handleLogout}>
                   Выйти
@@ -65,36 +64,34 @@ export function Navbar() {
       </Container>
 
       <Drawer opened={opened} onClose={close} size="xs" padding="md" withCloseButton={false}>
-        <Stack gap="xs">
-          <Link href="/" style={{ textDecoration: "none" }} onClick={close}>
-            <Button variant="subtle" fullWidth justify="flex-start">
+        <Stack className={styles.drawerStack}>
+          <Link href="/" className={styles.navLink} onClick={close}>
+            <Button variant="subtle" className={styles.drawerButton}>
               📔 Главная
             </Button>
           </Link>
 
           {session?.user && (
-            <Link href="/entries/list" style={{ textDecoration: "none" }} onClick={close}>
-              <Button variant="subtle" fullWidth justify="flex-start">
+            <Link href="/entries/list" className={styles.navLink} onClick={close}>
+              <Button variant="subtle" className={styles.drawerButton}>
                 📝 Мои записи
               </Button>
             </Link>
           )}
         </Stack>
 
-        <Divider my="md" />
+        <Divider className={styles.drawerDivider} />
 
         {session?.user ? (
           <Stack gap="xs">
-            <Text size="sm" c="dimmed" px="sm">
-              {session.user.name}
-            </Text>
+            <Text className={styles.drawerUser}>{session.user.name}</Text>
 
-            <Button variant="default" fullWidth onClick={handleLogout}>
+            <Button variant="default" className={styles.drawerButton} onClick={handleLogout}>
               Выйти
             </Button>
           </Stack>
         ) : (
-          <Button component={Link} href="/login" variant="default" fullWidth onClick={close}>
+          <Button component={Link} href="/login" variant="default" className={styles.drawerButton} onClick={close}>
             Войти
           </Button>
         )}

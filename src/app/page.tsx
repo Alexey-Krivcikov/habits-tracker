@@ -5,7 +5,7 @@ import { IconArrowRight, IconBrain, IconHeart, IconMessages, IconSparkles, IconS
 import Link from "next/link";
 import { useSession } from "@/features/auth/services";
 import { EntryList, useFetchEntries } from "@/features/entries";
-import styles from "./HomePage.module.css";
+import styles from "./HomePage.module.scss";
 
 const steps = [
   { icon: IconMessages, label: "Ситуация", desc: "Что произошло? Опишите обстоятельства.", color: "blue" },
@@ -21,7 +21,7 @@ export default function Home() {
   if (isPending) {
     return (
       <Container size="md">
-        <Flex mih="calc(100dvh - 60px)" align="center" justify="center">
+        <Flex className={styles.centeredFlex}>
           <Loader />
         </Flex>
       </Container>
@@ -36,15 +36,15 @@ export default function Home() {
         <Box className={styles.heroSection}>
           <Container size="sm" py={80}>
             <Stack align="center" gap={0}>
-              <IconSparkles size={32} stroke={1.5} style={{ color: "#f0b429" }} />
+              <IconSparkles size={32} stroke={1.5} className={styles.heroIcon} />
 
-              <Title order={1} ta="center" mt="md" style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)" }}>
+              <Title order={1} mt="md" className={styles.heroTitleAuthed}>
                 С возвращением, {session.user.name}
               </Title>
 
               <div className={styles.heroUnderline} />
 
-              <Text ta="center" size="lg" c="dimmed" maw={540} lh={1.7}>
+              <Text ta="center" size="lg" className={styles.heroDesc}>
                 {count > 0
                   ? `Вы уже записали ${count} ${count === 1 ? "успех" : count < 5 ? "успеха" : "успехов"}. Продолжайте в том же духе!`
                   : "Пока нет записей. Сделайте первую — начните замечать свои успехи."}
@@ -56,13 +56,7 @@ export default function Home() {
                 size="lg"
                 mt="xl"
                 rightSection={<IconSparkles size={20} />}
-                styles={{
-                  root: {
-                    background: "#f0b429",
-                    color: "#000",
-                    "&:hover": { background: "#d49420" },
-                  },
-                }}
+                className={styles.amberButton}
               >
                 {count > 0 ? "✍️ Новая запись" : "✍️ Записать первый успех"}
               </Button>
@@ -87,15 +81,15 @@ export default function Home() {
       <Box className={styles.heroSection}>
         <Container size="sm" py={80}>
           <Stack align="center" gap={0}>
-            <IconSparkles size={32} stroke={1.5} style={{ color: "#f0b429" }} />
+            <IconSparkles size={32} stroke={1.5} className={styles.heroIcon} />
 
-            <Title order={1} ta="center" mt="md" style={{ fontSize: "clamp(2rem, 5vw, 2.8rem)" }}>
+            <Title order={1} mt="md" className={styles.heroTitle}>
               Дневник успеха
             </Title>
 
             <div className={styles.heroUnderline} />
 
-            <Text ta="center" size="lg" c="dimmed" maw={540} lh={1.7}>
+            <Text ta="center" size="lg" className={styles.heroDesc}>
               Одна запись в день — и ваш взгляд на себя начинает меняться.
             </Text>
 
@@ -105,13 +99,7 @@ export default function Home() {
               size="lg"
               mt="xl"
               rightSection={<IconArrowRight size={20} />}
-              styles={{
-                root: {
-                  background: "#f0b429",
-                  color: "#000",
-                  "&:hover": { background: "#d49420" },
-                },
-              }}
+              className={styles.amberButton}
             >
               Записать первый успех
             </Button>
@@ -123,16 +111,9 @@ export default function Home() {
         <Stack gap="lg">
           <SimpleGrid cols={{ base: 2, xs: 4 }} spacing="md">
             {steps.map(({ icon: Icon, label, desc, color }) => (
-              <Card
-                key={label}
-                className={styles.stepCard}
-                padding="md"
-                radius="md"
-                withBorder
-                style={{ cursor: "default" }}
-              >
+              <Card key={label} className={styles.stepCard} padding="md" radius="md" withBorder>
                 <Stack gap="xs" align="center" ta="center">
-                  <Icon size={24} stroke={1.5} style={{ color: `var(--mantine-color-${color}-6)` }} />
+                  <Icon size={24} className={styles.stepIcon} style={{ color: `var(--mantine-color-${color}-6)` }} />
                   <Text size="sm" fw={600}>
                     {label}
                   </Text>
@@ -162,7 +143,7 @@ export default function Home() {
               {steps.map(({ icon: Icon, label, desc }, i) => (
                 <Group key={label} gap="md" wrap="nowrap">
                   <Flex className={styles.iconBg}>
-                    <Icon size={20} stroke={1.5} />
+                    <Icon size={20} />
                   </Flex>
 
                   <div>
@@ -183,16 +164,9 @@ export default function Home() {
               component={Link}
               href="/login"
               size="md"
-              rightSection={<IconArrowRight size={18} />}
+              rightSection={<IconArrowRight size={18} className={styles.amberOutlineIcon} />}
               variant="outline"
-              styles={{
-                root: {
-                  borderColor: "#f0b429",
-                  color: "#f0b429",
-                  "&:hover": { borderColor: "#d49420", color: "#d49420" },
-                },
-                section: { color: "#f0b429" },
-              }}
+              className={styles.amberOutline}
             >
               Войти и начать вести дневник
             </Button>

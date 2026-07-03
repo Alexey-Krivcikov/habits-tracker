@@ -5,6 +5,7 @@ import { Alert, Button, Divider, Group, Stack, Text, Textarea } from "@mantine/c
 import { IconBrain, IconDeviceFloppy, IconHeart, IconMessages, IconStar } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
 import { type EntryFormValues, entrySchema, useCreateEntry } from "@/features";
+import styles from "./EntryForm.module.scss";
 
 const fields = [
   {
@@ -76,13 +77,11 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
     return (
       <div key={field.name}>
         <Group gap="xs" mb={4}>
-          <FieldIcon size={18} stroke={1.5} />
+          <FieldIcon size={18} />
 
-          <Text component="span" size="sm" fw={600}>
-            {field.step}
-          </Text>
+          <Text className={styles.fieldHint}>{field.step}</Text>
 
-          <Text component="span" size="sm" c="dimmed">
+          <Text size="sm" c="dimmed">
             {field.hint}
           </Text>
         </Group>
@@ -110,7 +109,7 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
         <Divider
           label={
             <Group gap="xs">
-              <IconHeart size={14} stroke={1.5} />
+              <IconHeart size={14} />
               <Text size="sm" c="dimmed">
                 Как вы это пережили
               </Text>
@@ -128,13 +127,7 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
             size="md"
             loading={createEntryMutation.isPending}
             leftSection={<IconDeviceFloppy size={18} />}
-            styles={{
-              root: {
-                background: "#f0b429",
-                color: "#000",
-                "&:hover": { background: "#d49420" },
-              },
-            }}
+            className={styles.amberButton}
           >
             Сохранить запись
           </Button>

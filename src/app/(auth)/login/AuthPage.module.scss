@@ -1,0 +1,28 @@
+.pageFlex {
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 0;
+}
+
+.formCard {
+  box-shadow: var(--mantine-shadow-md);
+  padding: var(--mantine-spacing-xl);
+  border-radius: var(--mantine-radius-md);
+  width: 420px;
+}
+
+.formStack {
+  row-gap: var(--mantine-spacing-md);
+}
+
+.formTitle {
+  text-align: center;
+}
+
+.submitButton {
+  width: 100%;
+}
+
+.toggleGroup {
+  justify-content: center;
+}
