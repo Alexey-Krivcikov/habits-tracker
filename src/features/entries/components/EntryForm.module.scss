@@ -1,9 +1,9 @@
 .amberButton {
-  background: #f0b429;
+  background: var(--color-accent);
   color: #000;
 
   &:hover {
-    background: #d49420;
+    background: var(--color-accent-hover);
   }
 }
 
