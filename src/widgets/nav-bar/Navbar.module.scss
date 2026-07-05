@@ -14,6 +14,60 @@
   text-decoration: none;
 }
 
+:global([data-mantine-color-scheme="light"]) {
+  .navButton,
+  .defaultButton,
+  .drawerButton {
+    color: #000;
+  }
+
+  .navButton:hover,
+  .drawerButton:hover {
+    background: rgba(240, 180, 41, 0.08);
+  }
+
+  .defaultButton:hover {
+    background: rgba(240, 180, 41, 0.08);
+    border-color: var(--color-accent);
+  }
+}
+
+:global([data-mantine-color-scheme="dark"]) {
+  .navButton:hover,
+  .drawerButton:hover {
+    background: rgba(240, 180, 41, 0.15);
+  }
+
+  .defaultButton:hover {
+    background: rgba(240, 180, 41, 0.15);
+    border-color: var(--color-accent);
+  }
+}
+
+.navButton {
+  color: var(--mantine-color-text);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.defaultButton {
+  color: var(--mantine-color-text);
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.drawerButton {
+  width: 100%;
+  justify-content: flex-start;
+  color: var(--mantine-color-text);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
 .userName {
   font-size: var(--mantine-font-size-sm);
   color: var(--mantine-color-dimmed);
@@ -21,11 +75,6 @@
 
 .drawerStack {
   row-gap: var(--mantine-spacing-xs);
-}
-
-.drawerButton {
-  width: 100%;
-  justify-content: flex-start;
 }
 
 .drawerDivider {

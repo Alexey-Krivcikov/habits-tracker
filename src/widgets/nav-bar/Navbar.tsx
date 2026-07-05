@@ -28,14 +28,18 @@ export function Navbar() {
 
             <Box visibleFrom="sm">
               <Link href="/" className={styles.navLink}>
-                <Button variant="subtle">📔 Дневник успеха</Button>
+                <Button variant="subtle" className={styles.navButton}>
+                  📔 Дневник успеха
+                </Button>
               </Link>
             </Box>
 
             {session?.user && (
               <Box visibleFrom="sm">
                 <Link href="/entries/list" className={styles.navLink}>
-                  <Button variant="subtle">📝 Мои записи</Button>
+                  <Button variant="subtle" className={styles.navButton}>
+                    📝 Мои записи
+                  </Button>
                 </Link>
               </Box>
             )}
@@ -50,12 +54,12 @@ export function Navbar() {
               <Group gap="sm" visibleFrom="sm">
                 <Text className={styles.userName}>{session.user.name}</Text>
 
-                <Button variant="default" onClick={handleLogout}>
+                <Button variant="default" className={styles.defaultButton} onClick={handleLogout}>
                   Выйти
                 </Button>
               </Group>
             ) : (
-              <Button component={Link} href="/login" variant="default">
+              <Button component={Link} href="/login" variant="default" className={styles.defaultButton}>
                 Войти
               </Button>
             )}

@@ -1,28 +1,97 @@
-.pageFlex {
+.heroSection {
+  min-height: calc(100dvh - 60px);
+  display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 0 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+:global([data-mantine-color-scheme="dark"]) .heroSection {
+  background: linear-gradient(180deg, var(--mantine-color-dark-8) 0%, transparent 100%);
+  border-bottom-color: var(--mantine-color-dark-5);
+}
+
+:global([data-mantine-color-scheme="light"]) .heroSection {
+  background: linear-gradient(180deg, var(--mantine-color-gray-0) 0%, transparent 100%);
+  border-bottom-color: var(--mantine-color-gray-3);
+}
+
+.preambleStack {
+  align-items: center;
+  row-gap: 0;
+  min-width: 360px;
+}
+
+.preambleIcon {
+  color: var(--color-accent);
+}
+
+.preambleTitle {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.preambleUnderline {
+  width: 2.5rem;
+  height: 3px;
+  background: var(--color-accent);
+  border-radius: 2px;
+  margin: 0.75rem auto 1rem;
+}
+
+.preambleDesc {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-md);
+  margin-bottom: var(--mantine-spacing-xl);
 }
 
 .formCard {
-  box-shadow: var(--mantine-shadow-md);
-  padding: var(--mantine-spacing-xl);
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-md);
-  width: 420px;
 }
 
 .formStack {
   row-gap: var(--mantine-spacing-md);
 }
 
-.formTitle {
-  text-align: center;
-}
-
-.submitButton {
+.amberButton {
   width: 100%;
+  background: var(--color-accent);
+  color: #000;
+
+  &:hover {
+    background: var(--color-accent-hover);
+  }
 }
 
 .toggleGroup {
+  justify-content: center;
+  gap: var(--mantine-spacing-xs);
+}
+
+.toggleText {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+}
+
+.toggleLink {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--color-accent);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.centeredFlex {
+  min-height: calc(100dvh - 60px);
+  display: flex;
+  align-items: center;
   justify-content: center;
 }

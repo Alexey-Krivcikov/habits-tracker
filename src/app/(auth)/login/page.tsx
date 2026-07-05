@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Alert, Button, Flex, Group, Loader, Paper, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
+import { Alert, Box, Button, Flex, Group, Loader, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
+import { IconSparkles } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -57,7 +58,7 @@ export default function AuthPage() {
 
   if (isSessionPending) {
     return (
-      <Flex className={styles.pageFlex}>
+      <Flex className={styles.centeredFlex}>
         <Loader />
       </Flex>
     );
@@ -68,12 +69,20 @@ export default function AuthPage() {
   }
 
   return (
-    <Flex className={styles.pageFlex}>
-      <Paper className={styles.formCard}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack className={styles.formStack}>
-            <Title className={styles.formTitle}>{mode === "register" ? "Создание аккаунта" : "С возвращением"}</Title>
+    <Box className={styles.heroSection}>
+      <Stack className={styles.preambleStack}>
+        <IconSparkles size={28} className={styles.preambleIcon} />
 
+        <Title order={2} mt="sm" className={styles.preambleTitle}>
+          Дневник успеха
+        </Title>
+
+        <div className={styles.preambleUnderline} />
+
+        <Text className={styles.preambleDesc}>Войдите в свой дневник успеха</Text>
+
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formCard}>
+          <Stack p="xl" className={styles.formStack}>
             {error && <Alert color="red">Ошибка авторизации: {error}</Alert>}
 
             {mode === "register" && (
@@ -101,22 +110,26 @@ export default function AuthPage() {
 
             <Button
               type="submit"
-              className={styles.submitButton}
+              className={styles.amberButton}
               loading={loginMutation.isPending || registerMutation.isPending}
             >
-              {mode === "register" ? "Зарегистрироваться" : "Войти"}
+              {mode === "register" ? "Создать аккаунт" : "Войти"}
             </Button>
 
             <Group className={styles.toggleGroup}>
-              <Text size="sm">{mode === "register" ? "Уже есть аккаунт?" : "Нет аккаунта?"}</Text>
+              <Text className={styles.toggleText}>{mode === "register" ? "Уже есть аккаунт?" : "Нет аккаунта?"}</Text>
 
-              <Button variant="subtle" size="xs" onClick={() => setMode(mode === "register" ? "login" : "register")}>
-                {mode === "register" ? "Войти" : "Регистрация"}
-              </Button>
+              <button
+                type="button"
+                className={styles.toggleLink}
+                onClick={() => setMode(mode === "register" ? "login" : "register")}
+              >
+                {mode === "register" ? "Войти" : "Создать аккаунт"}
+              </button>
             </Group>
           </Stack>
         </form>
-      </Paper>
-    </Flex>
+      </Stack>
+    </Box>
   );
 }
