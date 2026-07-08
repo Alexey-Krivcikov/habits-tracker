@@ -1,11 +1,13 @@
 "use client";
 
-import { Alert, Loader, Stack, Text } from "@mantine/core";
+import { Alert, Loader, Text } from "@mantine/core";
 import { EntryCard, useDeleteEntry, useFetchEntries } from "@/features";
+import styles from "./EntryList.module.scss";
 
-export function EntryList() {
+export function EntryList({ limit }: { limit?: number }) {
   const { data: entries, isLoading, error } = useFetchEntries();
   const deleteEntryMutation = useDeleteEntry();
+  const displayed = limit ? (entries ?? []).slice(0, limit) : (entries ?? []);
 
   if (isLoading) {
     return <Loader />;
@@ -15,7 +17,7 @@ export function EntryList() {
     return <Alert color="red">Ошибка загрузки записей: {error.message}</Alert>;
   }
 
-  if (!entries?.length) {
+  if (!displayed.length) {
     return (
       <Text c="dimmed" ta="center" py="xl">
         Пока нет записей. Создайте первую!
@@ -28,15 +30,16 @@ export function EntryList() {
   };
 
   return (
-    <Stack gap="md">
-      {entries.map((entry) => (
-        <EntryCard
-          key={entry.id}
-          entry={entry}
-          onDelete={handleDelete}
-          isDeleting={deleteEntryMutation.isPending && deleteEntryMutation.variables === entry.id}
-        />
+    <div className={styles.grid}>
+      {displayed.map((entry) => (
+        <div key={entry.id} className={styles.cardWrapper}>
+          <EntryCard
+            entry={entry}
+            onDelete={handleDelete}
+            isDeleting={deleteEntryMutation.isPending && deleteEntryMutation.variables === entry.id}
+          />
+        </div>
       ))}
-    </Stack>
+    </div>
   );
 }

@@ -3,6 +3,16 @@
   padding: var(--mantine-spacing-lg);
   border-radius: var(--mantine-radius-md);
   border: 1px solid var(--mantine-color-default-border);
+  transition: box-shadow 0.15s, translate 0.15s;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: var(--mantine-shadow-md);
+    translate: 0 -1px;
+  }
 }
 
 .cardHeader {
@@ -28,4 +38,5 @@
 
 .fieldsStack {
   row-gap: var(--mantine-spacing-md);
+  flex: 1;
 }

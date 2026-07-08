@@ -54,7 +54,7 @@ export default function EntriesListPage() {
         </Container>
       </Box>
 
-      <Container size="sm" py="xl">
+      <Container size="xl" py="xl">
         {count > 0 ? (
           <EntryList />
         ) : (

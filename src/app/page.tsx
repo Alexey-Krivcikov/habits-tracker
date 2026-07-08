@@ -65,10 +65,10 @@ export default function Home() {
         </Box>
 
         {count > 0 && (
-          <Container size="sm" py="xl">
+          <Container size="xl" py="xl">
             <Stack gap="md">
               <Title order={4}>Последние записи</Title>
-              <EntryList />
+              <EntryList limit={4} />
             </Stack>
           </Container>
         )}
