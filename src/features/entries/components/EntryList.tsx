@@ -1,11 +1,12 @@
 "use client";
 
 import { Alert, Loader, Text } from "@mantine/core";
+import type { Entry } from "@/features";
 import { EntryCard, useDeleteEntry, useFetchEntries } from "@/features";
 import styles from "./EntryList.module.scss";
 
-export function EntryList({ limit }: { limit?: number }) {
-  const { data: entries, isLoading, error } = useFetchEntries();
+export function EntryList({ limit, initialEntries }: { limit?: number; initialEntries?: Entry[] }) {
+  const { data: entries, isLoading, error } = useFetchEntries(initialEntries);
   const deleteEntryMutation = useDeleteEntry();
   const displayed = limit ? (entries ?? []).slice(0, limit) : (entries ?? []);
 

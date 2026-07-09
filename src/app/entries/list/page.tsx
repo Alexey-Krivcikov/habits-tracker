@@ -1,24 +1,15 @@
-"use client";
-
-import { Box, Button, Card, Container, Flex, Loader, Stack, Text, Title } from "@mantine/core";
+import { Box, Button, Card, Container, Flex, Stack, Text, Title } from "@mantine/core";
 import { IconArrowRight, IconMessages, IconSparkles } from "@tabler/icons-react";
+import { headers } from "next/headers";
 import Link from "next/link";
-import { EntryList, useFetchEntries } from "@/features/entries";
+import { EntryList } from "@/features/entries";
+import { getEntries } from "@/features/entries/services/entries.service";
+import { auth } from "@/server/auth";
 import styles from "./EntriesPage.module.scss";
 
-export default function EntriesListPage() {
-  const { data: entries = [], isLoading } = useFetchEntries();
-
-  if (isLoading) {
-    return (
-      <Container size="md">
-        <Flex className={styles.centeredFlex}>
-          <Loader />
-        </Flex>
-      </Container>
-    );
-  }
-
+export default async function EntriesListPage() {
+  const session = await auth.api.getSession({ headers: await headers() });
+  const entries = session?.user ? await getEntries() : [];
   const count = entries.length;
 
   return (
@@ -40,23 +31,18 @@ export default function EntriesListPage() {
                 : "Пока нет записей. Сделайте первую — начните замечать свои успехи."}
             </Text>
 
-            <Button
-              component={Link}
-              href="/entries/new"
-              size="lg"
-              mt="xl"
-              rightSection={<IconSparkles size={20} />}
-              className={styles.amberButton}
-            >
-              {count > 0 ? "✍️ Новая запись" : "✍️ Записать первый успех"}
-            </Button>
+            <Link href="/entries/new">
+              <Button size="lg" mt="xl" rightSection={<IconSparkles size={20} />} className={styles.amberButton}>
+                {count > 0 ? "✍️ Новая запись" : "✍️ Записать первый успех"}
+              </Button>
+            </Link>
           </Stack>
         </Container>
       </Box>
 
       <Container size="xl" py="xl">
         {count > 0 ? (
-          <EntryList />
+          <EntryList initialEntries={entries} />
         ) : (
           <Card padding="xl" radius="md" withBorder>
             <Stack align="center" gap="md" py="xl">
@@ -70,15 +56,11 @@ export default function EntriesListPage() {
                 Каждая запись помогает заметить то, что обычно ускользает. Начните прямо сейчас.
               </Text>
 
-              <Button
-                component={Link}
-                href="/entries/new"
-                size="md"
-                rightSection={<IconArrowRight size={18} />}
-                className={styles.amberButton}
-              >
-                Записать первый успех
-              </Button>
+              <Link href="/entries/new">
+                <Button size="md" rightSection={<IconArrowRight size={18} />} className={styles.amberButton}>
+                  Записать первый успех
+                </Button>
+              </Link>
             </Stack>
           </Card>
         )}

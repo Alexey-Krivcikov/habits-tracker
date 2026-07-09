@@ -1,16 +1,23 @@
 "use client";
 
-import { Box, Burger, Button, Container, Divider, Drawer, Group, Loader, Stack, Text } from "@mantine/core";
+import { Box, Burger, Button, Container, Divider, Drawer, Group, Stack, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signOut, useSession } from "@/features/auth/services";
+import { signOut } from "@/features/auth/services";
 import { ThemeToggle } from "@/shared/ui";
 import styles from "./Navbar.module.scss";
 
-export function Navbar() {
+interface NavbarProps {
+  session: {
+    user: {
+      name: string;
+    } | null;
+  } | null;
+}
+
+export function Navbar({ session }: NavbarProps) {
   const router = useRouter();
-  const { data: session, isPending } = useSession();
   const [opened, { toggle, close }] = useDisclosure(false);
 
   const handleLogout = async () => {
@@ -48,9 +55,7 @@ export function Navbar() {
           <Group>
             <ThemeToggle />
 
-            {isPending ? (
-              <Loader size="sm" />
-            ) : session?.user ? (
+            {session?.user ? (
               <Group gap="sm" visibleFrom="sm">
                 <Text className={styles.userName}>{session.user.name}</Text>
 

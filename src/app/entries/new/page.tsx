@@ -1,14 +1,9 @@
-"use client";
-
 import { Container, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { IconSparkles } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
 import { EntryForm } from "@/features/entries";
 import styles from "./EntriesNewPage.module.scss";
 
 export default function NewEntryPage() {
-  const router = useRouter();
-
   return (
     <Container size="sm" className={styles.pageContainer}>
       <Stack className={styles.headerStack}>
@@ -25,7 +20,7 @@ export default function NewEntryPage() {
       </Stack>
 
       <Paper className={styles.formCard}>
-        <EntryForm onSuccess={() => router.push("/entries/list")} />
+        <EntryForm />
       </Paper>
     </Container>
   );

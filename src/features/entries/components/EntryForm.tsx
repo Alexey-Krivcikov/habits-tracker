@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button, Divider, Group, Stack, Text, Textarea } from "@mantine/core";
 import { IconBrain, IconDeviceFloppy, IconHeart, IconMessages, IconStar } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { type EntryFormValues, entrySchema, useCreateEntry } from "@/features";
 import styles from "./EntryForm.module.scss";
@@ -47,6 +48,7 @@ interface EntryFormProps {
 }
 
 export function EntryForm({ onSuccess }: EntryFormProps) {
+  const router = useRouter();
   const createEntryMutation = useCreateEntry();
   const error = createEntryMutation.error?.message;
 
@@ -69,6 +71,7 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
     await createEntryMutation.mutateAsync(values);
     reset();
     onSuccess?.();
+    router.push("/entries/list");
   };
 
   const renderField = (field: (typeof fields)[number]) => {

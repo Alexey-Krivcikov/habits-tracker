@@ -1,10 +1,10 @@
-"use client";
-
-import { Box, Button, Card, Container, Flex, Group, Loader, SimpleGrid, Stack, Text, Title } from "@mantine/core";
+import { Box, Button, Card, Container, Flex, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { IconArrowRight, IconBrain, IconHeart, IconMessages, IconSparkles, IconStar } from "@tabler/icons-react";
+import { headers } from "next/headers";
 import Link from "next/link";
-import { useSession } from "@/features/auth/services";
-import { EntryList, useFetchEntries } from "@/features/entries";
+import { EntryList } from "@/features/entries";
+import { getEntries } from "@/features/entries/services/entries.service";
+import { auth } from "@/server/auth";
 import styles from "./HomePage.module.scss";
 
 const steps = [
@@ -14,21 +14,11 @@ const steps = [
   { icon: IconBrain, label: "Мысль", desc: "О чём вы думали? Запишите мысль.", color: "grape" },
 ];
 
-export default function Home() {
-  const { data: session, isPending } = useSession();
-  const { data: entries = [] } = useFetchEntries();
-
-  if (isPending) {
-    return (
-      <Container size="md">
-        <Flex className={styles.centeredFlex}>
-          <Loader />
-        </Flex>
-      </Container>
-    );
-  }
+export default async function Home() {
+  const session = await auth.api.getSession({ headers: await headers() });
 
   if (session?.user) {
+    const entries = await getEntries();
     const count = entries.length;
 
     return (
@@ -50,16 +40,11 @@ export default function Home() {
                   : "Пока нет записей. Сделайте первую — начните замечать свои успехи."}
               </Text>
 
-              <Button
-                component={Link}
-                href="/entries/new"
-                size="lg"
-                mt="xl"
-                rightSection={<IconSparkles size={20} />}
-                className={styles.amberButton}
-              >
-                {count > 0 ? "✍️ Новая запись" : "✍️ Записать первый успех"}
-              </Button>
+              <Link href="/entries/new">
+                <Button size="lg" mt="xl" rightSection={<IconSparkles size={20} />} className={styles.amberButton}>
+                  {count > 0 ? "✍️ Новая запись" : "✍️ Записать первый успех"}
+                </Button>
+              </Link>
             </Stack>
           </Container>
         </Box>
@@ -68,7 +53,7 @@ export default function Home() {
           <Container size="xl" py="xl">
             <Stack gap="md">
               <Title order={4}>Последние записи</Title>
-              <EntryList limit={4} />
+              <EntryList limit={4} initialEntries={entries} />
             </Stack>
           </Container>
         )}
@@ -93,16 +78,11 @@ export default function Home() {
               Одна запись в день — и ваш взгляд на себя начинает меняться.
             </Text>
 
-            <Button
-              component={Link}
-              href="/login"
-              size="lg"
-              mt="xl"
-              rightSection={<IconArrowRight size={20} />}
-              className={styles.amberButton}
-            >
-              Записать первый успех
-            </Button>
+            <Link href="/login">
+              <Button size="lg" mt="xl" rightSection={<IconArrowRight size={20} />} className={styles.amberButton}>
+                Записать первый успех
+              </Button>
+            </Link>
           </Stack>
         </Container>
       </Box>
@@ -160,16 +140,16 @@ export default function Home() {
           </Card>
 
           <Flex align="center" justify="center" my="xl">
-            <Button
-              component={Link}
-              href="/login"
-              size="md"
-              rightSection={<IconArrowRight size={18} className={styles.amberOutlineIcon} />}
-              variant="outline"
-              className={styles.amberOutline}
-            >
-              Войти и начать вести дневник
-            </Button>
+            <Link href="/login">
+              <Button
+                size="md"
+                rightSection={<IconArrowRight size={18} className={styles.amberOutlineIcon} />}
+                variant="outline"
+                className={styles.amberOutline}
+              >
+                Войти и начать вести дневник
+              </Button>
+            </Link>
           </Flex>
         </Stack>
       </Container>
