@@ -7,7 +7,9 @@ export {
   EntryForm,
   EntryList,
   entrySchema,
+  PaginatedEntryList,
   useCreateEntry,
   useDeleteEntry,
   useFetchEntries,
+  useFetchEntriesPage,
 } from "./entries";

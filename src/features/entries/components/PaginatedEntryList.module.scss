@@ -1,0 +1,15 @@
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--mantine-spacing-xl);
+}
+
+:global(.mantine-Pagination-control[data-active]) {
+  background: var(--color-accent);
+  border-color: transparent;
+  color: #000;
+
+  &:hover {
+    background: var(--color-accent-hover);
+  }
+}

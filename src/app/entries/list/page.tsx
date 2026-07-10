@@ -2,15 +2,21 @@ import { Box, Button, Card, Container, Flex, Stack, Text, Title } from "@mantine
 import { IconArrowRight, IconMessages, IconSparkles } from "@tabler/icons-react";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { EntryList } from "@/features/entries";
-import { getEntries } from "@/features/entries/services/entries.service";
+import { redirect } from "next/navigation";
+import { PaginatedEntryList } from "@/features/entries/components/PaginatedEntryList";
+import { getEntriesPaginated } from "@/features/entries/services/entries.service";
 import { auth } from "@/server/auth";
 import styles from "./EntriesPage.module.scss";
 
 export default async function EntriesListPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-  const entries = session?.user ? await getEntries() : [];
-  const count = entries.length;
+
+  if (!session?.user) {
+    redirect("/login");
+  }
+
+  const { entries, total } = await getEntriesPaginated(1, 12);
+  const count = total;
 
   return (
     <>
@@ -42,7 +48,7 @@ export default async function EntriesListPage() {
 
       <Container size="xl" py="xl">
         {count > 0 ? (
-          <EntryList initialEntries={entries} />
+          <PaginatedEntryList initialEntries={entries} total={total} pageSize={12} />
         ) : (
           <Card padding="xl" radius="md" withBorder>
             <Stack align="center" gap="md" py="xl">
