@@ -1,11 +1,21 @@
 import { Box, Button, Card, Container, Flex, Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { IconArrowRight, IconBrain, IconHeart, IconMessages, IconSparkles, IconStar } from "@tabler/icons-react";
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { EntryList } from "@/features/entries";
 import { getEntries } from "@/features/entries/services/entries.service";
 import { auth } from "@/server/auth";
 import styles from "./HomePage.module.scss";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const session = await auth.api.getSession({ headers: await headers() });
+  return {
+    description: session?.user
+      ? "Продолжайте записывать свои успехи."
+      : "Одна запись в день — и ваш взгляд на себя начинает меняться.",
+  };
+}
 
 const steps = [
   { icon: IconMessages, label: "Ситуация", desc: "Что произошло? Опишите обстоятельства.", color: "blue" },

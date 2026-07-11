@@ -1,7 +1,13 @@
 import { Container, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { IconSparkles } from "@tabler/icons-react";
+import type { Metadata } from "next";
 import { EntryForm } from "@/features/entries";
 import styles from "./EntriesNewPage.module.scss";
+
+export const metadata: Metadata = {
+  title: "Новая запись",
+  description: "Создайте запись о своём успехе.",
+};
 
 export default function NewEntryPage() {
   return (

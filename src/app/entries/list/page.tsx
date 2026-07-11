@@ -1,5 +1,6 @@
 import { Box, Button, Card, Container, Flex, Stack, Text, Title } from "@mantine/core";
 import { IconArrowRight, IconMessages, IconSparkles } from "@tabler/icons-react";
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -7,6 +8,11 @@ import { PaginatedEntryList } from "@/features/entries/components/PaginatedEntry
 import { getEntriesPaginated } from "@/features/entries/services/entries.service";
 import { auth } from "@/server/auth";
 import styles from "./EntriesPage.module.scss";
+
+export const metadata: Metadata = {
+  title: "Мои записи",
+  description: "Список ваших записей в дневнике успеха.",
+};
 
 export default async function EntriesListPage() {
   const session = await auth.api.getSession({ headers: await headers() });
