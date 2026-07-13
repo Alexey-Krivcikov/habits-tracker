@@ -1,0 +1,63 @@
+.pageStack {
+  row-gap: var(--mantine-spacing-lg);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent);
+  text-decoration: none;
+  width: fit-content;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.headerGroup {
+  justify-content: space-between;
+}
+
+.detailCard {
+  box-shadow: var(--mantine-shadow-sm);
+  padding: var(--mantine-spacing-xl);
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-default-border);
+}
+
+.fieldsStack {
+  row-gap: var(--mantine-spacing-lg);
+}
+
+.fieldGroup {
+  column-gap: 8px;
+  margin-bottom: 4px;
+}
+
+.fieldLabel {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--color-accent);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.fieldValue {
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.actionsGroup {
+  justify-content: center;
+  gap: var(--mantine-spacing-md);
+}
+
+.outlineButton {
+  border-color: var(--mantine-color-default-border);
+
+  &:hover {
+    border-color: var(--color-accent);
+  }
+}

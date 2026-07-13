@@ -1,7 +1,8 @@
 "use server";
 
-import { count, desc, eq } from "drizzle-orm";
+import { and, count, desc, eq } from "drizzle-orm";
 import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 import type { EntryFormValues } from "@/features";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
@@ -48,6 +49,20 @@ export async function getEntriesPaginated(page: number, pageSize = 12) {
   ]);
 
   return { entries, total: Number(countResult.value) };
+}
+
+export async function getEntryById(id: string) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const [entry] = await db
+    .select()
+    .from(successEntries)
+    .where(and(eq(successEntries.id, id), eq(successEntries.userId, session.user.id)))
+    .limit(1);
+
+  if (!entry) notFound();
+  return entry;
 }
 
 export async function deleteEntry(id: string) {

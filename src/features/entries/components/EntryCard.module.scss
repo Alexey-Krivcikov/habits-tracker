@@ -1,3 +1,10 @@
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  width: 100%;
+}
+
 .card {
   box-shadow: var(--mantine-shadow-sm);
   padding: var(--mantine-spacing-lg);
@@ -8,11 +15,12 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+}
 
-  &:hover {
-    box-shadow: var(--mantine-shadow-md);
-    translate: 0 -1px;
-  }
+.cardLink:hover .card {
+  box-shadow: var(--mantine-shadow-md);
+  translate: 0 -1px;
 }
 
 .cardHeader {
