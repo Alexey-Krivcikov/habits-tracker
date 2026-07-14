@@ -12,4 +12,5 @@ export {
   useDeleteEntry,
   useFetchEntries,
   useFetchEntriesPage,
+  useUpdateEntry,
 } from "./entries";

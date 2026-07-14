@@ -65,6 +65,20 @@ export async function getEntryById(id: string) {
   return entry;
 }
 
+export async function updateEntry(id: string, data: EntryFormValues) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const [entry] = await db
+    .update(successEntries)
+    .set(data)
+    .where(and(eq(successEntries.id, id), eq(successEntries.userId, session.user.id)))
+    .returning();
+
+  if (!entry) notFound();
+  return entry;
+}
+
 export async function deleteEntry(id: string) {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user?.id) throw new Error("Unauthorized");

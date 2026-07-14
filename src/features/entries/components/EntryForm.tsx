@@ -5,7 +5,7 @@ import { Alert, Button, Divider, Group, Stack, Text, Textarea } from "@mantine/c
 import { IconBrain, IconDeviceFloppy, IconHeart, IconMessages, IconStar } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { type EntryFormValues, entrySchema, useCreateEntry } from "@/features";
+import { type EntryFormValues, entrySchema, useCreateEntry, useUpdateEntry } from "@/features";
 import styles from "./EntryForm.module.scss";
 
 const fields = [
@@ -44,13 +44,17 @@ const fields = [
 ] as const;
 
 interface EntryFormProps {
-  onSuccess?: () => void;
+  defaultValues?: EntryFormValues;
+  redirectTo?: string;
+  entryId?: string;
 }
 
-export function EntryForm({ onSuccess }: EntryFormProps) {
+export function EntryForm({ defaultValues, redirectTo = "/entries/list", entryId }: EntryFormProps) {
   const router = useRouter();
   const createEntryMutation = useCreateEntry();
-  const error = createEntryMutation.error?.message;
+  const updateEntryMutation = useUpdateEntry();
+  const mutation = entryId ? updateEntryMutation : createEntryMutation;
+  const error = mutation.error?.message;
 
   const {
     register,
@@ -59,7 +63,7 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
     reset,
   } = useForm<EntryFormValues>({
     resolver: zodResolver(entrySchema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       situation: "",
       achievement: "",
       emotion: "",
@@ -68,10 +72,14 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
   });
 
   const onSubmit = async (values: EntryFormValues) => {
-    await createEntryMutation.mutateAsync(values);
-    reset();
-    onSuccess?.();
-    router.push("/entries/list");
+    if (entryId) {
+      await updateEntryMutation.mutateAsync({ id: entryId, data: values });
+    } else {
+      await createEntryMutation.mutateAsync(values);
+    }
+
+    reset(values);
+    router.push(redirectTo);
   };
 
   const renderField = (field: (typeof fields)[number]) => {
@@ -128,11 +136,11 @@ export function EntryForm({ onSuccess }: EntryFormProps) {
           <Button
             type="submit"
             size="md"
-            loading={createEntryMutation.isPending}
+            loading={mutation.isPending}
             leftSection={<IconDeviceFloppy size={18} />}
             className={styles.amberButton}
           >
-            Сохранить запись
+            {entryId ? "Сохранить изменения" : "Сохранить запись"}
           </Button>
         </Group>
       </Stack>

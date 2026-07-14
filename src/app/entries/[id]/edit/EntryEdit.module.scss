@@ -1,0 +1,24 @@
+.stack {
+  min-width: 360px;
+
+  @media (min-width: 48em) {
+    min-width: 560px;
+  }
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent);
+  text-decoration: none;
+  width: fit-content;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+.headerGroup {
+  column-gap: 10px;
+}
