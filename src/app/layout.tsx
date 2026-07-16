@@ -1,12 +1,13 @@
+import { ColorSchemeScript } from "@mantine/core";
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+import { Notifications } from "@mantine/notifications";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
-import { MantineProvider, QueryProvider } from "@/shared/providers";
-import "@mantine/core/styles.css";
-import "@mantine/notifications/styles.css";
-import { Notifications } from "@mantine/notifications";
 import { auth } from "@/server/auth";
+import { MantineProvider, QueryProvider } from "@/shared/providers";
 import { Navbar } from "@/widgets";
 
 const geistSans = Geist({
@@ -37,6 +38,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
+        <ColorSchemeScript defaultColorScheme="dark" />
         <MantineProvider>
           <Notifications position="bottom-left" />
           <QueryProvider>

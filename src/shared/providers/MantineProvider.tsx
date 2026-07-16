@@ -3,5 +3,5 @@
 import { MantineProvider } from "@mantine/core";
 
 export function MantineProviders({ children }: { children: React.ReactNode }) {
-  return <MantineProvider defaultColorScheme="auto">{children}</MantineProvider>;
+  return <MantineProvider defaultColorScheme="dark">{children}</MantineProvider>;
 }
