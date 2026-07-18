@@ -36,8 +36,12 @@ export default async function RootLayout({
   const session = await auth.api.getSession({ headers: await headers() });
 
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ColorSchemeScript defaultColorScheme="dark" />
         <MantineProvider>
           <Notifications position="bottom-left" />
