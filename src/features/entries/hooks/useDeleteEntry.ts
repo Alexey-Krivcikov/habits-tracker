@@ -2,16 +2,17 @@
 
 import { notifications } from "@mantine/notifications";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/shared/api";
 import { deleteEntry } from "../services/entries.service";
 
 export function useDeleteEntry() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["entries", "delete"],
+    mutationKey: queryKeys.entries.delete,
     mutationFn: (id: string) => deleteEntry(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["entries"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.entries.all });
       notifications.show({
         color: "green",
         title: "Удалено",
