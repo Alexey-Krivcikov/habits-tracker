@@ -43,9 +43,8 @@ src/
 │   │   │   └── auth.hooks.ts         # useLogin, useRegister (React Query mutations)
 │   │   ├── schemas/
 │   │   │   └── auth.schema.ts        # loginSchema, registerSchema (Zod)
-│   │   ├── services/
-│   │   │   └── authClient.ts         # Better Auth client (signIn, signUp, signOut, useSession)
-│   │   └── types/                    # (пусто — типы из схем)
+│   │   └── services/
+│   │       └── authClient.ts         # Better Auth client (signIn, signUp, signOut, useSession)
 │   │
 │   ├── entries/
 │   │   ├── index.ts
@@ -66,9 +65,6 @@ src/
 │   │   │   └── entries.service.ts    # "use server" — все CRUD операции
 │   │   └── types/
 │   │       └── entry.types.ts        # Entry = $inferSelect
-│   │
-│   └── common/
-│       └── index.ts                  # (заглушка)
 │
 ├── widgets/                          # FSD: виджеты
 │   ├── index.ts                      # Re-export Navbar
@@ -78,21 +74,11 @@ src/
 │
 ├── shared/                           # FSD: shared layer
 │   ├── api/
-│   │   └── index.ts                  # queryKeys (auth keys)
-│   ├── config/
-│   │   └── index.ts                  # (пусто)
-│   ├── constants/
-│   │   └── index.ts                  # (пусто)
-│   ├── hooks/
-│   │   └── index.ts                  # (пусто)
-│   ├── lib/
-│   │   └── index.ts                  # (пусто)
+│   │   └── index.ts                  # queryKeys
 │   ├── providers/
 │   │   ├── index.ts
-│   │   ├── MantineProvider.tsx       # "use client" — Mantine с auto color scheme
+│   │   ├── MantineProvider.tsx       # "use client" — Mantine с dark color scheme
 │   │   └── QueryProvider.tsx         # "use client" — TanStack Query + DevTools
-│   ├── types/
-│   │   └── index.ts                  # (пусто)
 │   └── ui/
 │       ├── index.ts
 │       └── theme-toggle/
@@ -190,6 +176,3 @@ import { successEntries } from "@/server/db/schema";
 6. Написать "use server" функции в `services/` для CRUD
 7. Создать React Query hooks в `hooks/`
 
-## Пустые директории (место для роста)
-
-- `shared/config/`, `shared/constants/`, `shared/hooks/`, `shared/lib/`, `shared/types/`, `features/common/` — зарезервированы, пока не наполнены
