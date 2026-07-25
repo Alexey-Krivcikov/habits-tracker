@@ -5,23 +5,23 @@ import { Alert, Button, PasswordInput, Stack, Text, TextInput } from "@mantine/c
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { type LoginFormValues, loginSchema, useLogin } from "@/features";
-import styles from "./AuthPage.module.scss";
+import { type RegisterFormValues, registerSchema, useRegister } from "@/features";
+import styles from "../login/AuthPage.module.scss";
 
-export function LoginForm() {
+export function RegisterForm() {
   const router = useRouter();
-  const mutation = useLogin();
+  const mutation = useRegister();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "" },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { email: "", password: "", name: "" },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
+  const onSubmit = (values: RegisterFormValues) => {
     mutation.mutate(values, {
       onSuccess: () => router.push("/entries/list"),
     });
@@ -30,7 +30,9 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.formCard}>
       <Stack p="xl" className={styles.formStack}>
-        {mutation.error && <Alert color="red">Ошибка авторизации: {mutation.error.message}</Alert>}
+        {mutation.error && <Alert color="red">Ошибка регистрации: {mutation.error.message}</Alert>}
+
+        <TextInput label="Имя" placeholder="Ваше имя" {...register("name")} error={errors.name?.message} />
 
         <TextInput label="Email" placeholder="you@example.com" {...register("email")} error={errors.email?.message} />
 
@@ -42,13 +44,13 @@ export function LoginForm() {
         />
 
         <Button type="submit" className={styles.amberButton} loading={mutation.isPending}>
-          Войти
+          Создать аккаунт
         </Button>
 
         <Stack className={styles.toggleGroup} gap={4}>
-          <Text className={styles.toggleText}>Нет аккаунта?</Text>
-          <Link href="/register" className={styles.toggleLink}>
-            Создать аккаунт
+          <Text className={styles.toggleText}>Уже есть аккаунт?</Text>
+          <Link href="/login" className={styles.toggleLink}>
+            Войти
           </Link>
         </Stack>
       </Stack>
