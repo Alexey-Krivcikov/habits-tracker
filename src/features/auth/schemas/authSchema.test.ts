@@ -1,4 +1,4 @@
-import { loginSchema, registerSchema } from "@/features";
+import { loginSchema, registerSchema } from "./auth.schema";
 
 const validLogin = { email: "user@example.com", password: "password123" };
 const validRegister = { email: "user@example.com", password: "password123", name: "Иван" };
