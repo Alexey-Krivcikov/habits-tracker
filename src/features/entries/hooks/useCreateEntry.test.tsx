@@ -1,6 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { wrapper } from "@/tests/utils";
 import { useCreateEntry } from "./useCreateEntry";
 
 const mocks = vi.hoisted(() => {
@@ -30,10 +30,6 @@ const createdEntry = {
   userId: "user-1",
   ...formValues,
 };
-
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>
-);
 
 describe("useCreateEntry", () => {
   beforeEach(() => {

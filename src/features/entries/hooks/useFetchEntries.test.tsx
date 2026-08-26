@@ -1,6 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { wrapper } from "@/tests/utils";
 import { useFetchEntries } from "./useFetchEntries";
 
 const mocks = vi.hoisted(() => {
@@ -21,12 +21,6 @@ const entry = {
   emotion: "Эмоция",
   achievement: "Достижение",
 };
-
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: 0 } } })}>
-    {children}
-  </QueryClientProvider>
-);
 
 describe("useFetchEntries", () => {
   beforeEach(() => {

@@ -1,6 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { wrapper } from "@/tests/utils";
 import { useDeleteEntry } from "./useDeleteEntry";
 
 const mocks = vi.hoisted(() => {
@@ -16,10 +16,6 @@ vi.mock("@mantine/notifications", () => ({
 vi.mock("../services/entries.service", () => ({
   deleteEntry: mocks.deleteEntry,
 }));
-
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>
-);
 
 describe("useDeleteEntry", () => {
   beforeEach(() => {

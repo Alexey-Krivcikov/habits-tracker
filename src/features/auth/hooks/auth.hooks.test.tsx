@@ -1,6 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { wrapper } from "@/tests/utils";
 import { useLogin, useRegister } from "./auth.hooks";
 
 const mocks = vi.hoisted(() => {
@@ -13,10 +13,6 @@ vi.mock("@/features/auth/services", () => ({
   signIn: { email: mocks.signInEmail },
   signUp: { email: mocks.signUpEmail },
 }));
-
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>
-);
 
 describe("useLogin", () => {
   beforeEach(() => {
