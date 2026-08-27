@@ -1,4 +1,6 @@
 import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach, vi } from "vitest";
 
 Object.assign(process.env, {
   NODE_ENV: "test",
@@ -38,4 +40,10 @@ Object.defineProperty(document, "fonts", {
     addEventListener: () => {},
     removeEventListener: () => {},
   },
+});
+
+afterEach(() => {
+  cleanup();
+  vi.clearAllMocks();
+  vi.unstubAllGlobals();
 });
