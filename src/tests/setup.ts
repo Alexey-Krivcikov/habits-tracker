@@ -5,7 +5,7 @@ import { afterEach, vi } from "vitest";
 Object.assign(process.env, {
   NODE_ENV: "test",
   DATABASE_URL: "https://localhost:5432/test",
-  BETTER_AUTH_SECRET: "test-secret",
+  BETTER_AUTH_SECRET: "test-secret-1234567890-1234567890-12",
   NEXT_PUBLIC_APP_URL: "http://localhost:3000",
 });
 
