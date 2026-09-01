@@ -63,11 +63,9 @@ describe("Navbar", () => {
   });
 
   it("opens the mobile drawer when the burger is clicked", async () => {
-    const { container } = renderNavbar({ user: { name: "Иван" } });
+    renderNavbar({ user: { name: "Иван" } });
 
-    const burger = container.querySelector(".mantine-Burger-root");
-    if (!burger) throw new Error("Burger button not found");
-    fireEvent.click(burger);
+    fireEvent.click(screen.getByRole("button", { name: /toggle navigation/i }));
 
     expect(await screen.findByText("📔 Главная")).toBeInTheDocument();
   });

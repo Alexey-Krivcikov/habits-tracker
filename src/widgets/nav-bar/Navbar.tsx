@@ -31,7 +31,7 @@ export function Navbar({ session }: NavbarProps) {
       <Container className={styles.navbarContainer}>
         <Group className={styles.navbarInner}>
           <Group>
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" />
+            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" aria-label="Toggle navigation" />
 
             <Box visibleFrom="sm">
               <Link href="/" className={styles.navLink}>
