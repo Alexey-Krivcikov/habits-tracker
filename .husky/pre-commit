@@ -1,6 +1,9 @@
 #!/bin/sh
 echo "🔍 Running Biome check..."
-bun biome check --write --staged --no-errors-on-unmatched
+npx biome check --write --staged --no-errors-on-unmatched
+
+echo "🎨 Running Biome format..."
+npx biome format --write --staged --no-errors-on-unmatched
 
 echo "📦 Adding fixed files to stage..."
 git add --update
