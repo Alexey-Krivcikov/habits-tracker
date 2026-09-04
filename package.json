@@ -12,6 +12,7 @@
     "check": "biome check --staged --no-errors-on-unmatched",
     "commitlint": "commitlint --edit",
     "db:generate": "drizzle-kit generate",
+    "db:check": "drizzle-kit check",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
