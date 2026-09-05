@@ -157,6 +157,19 @@ export function useCreateEntry() {
 2. Wrap new auth method in React Query hook in `src/shared/api/auth/mutations.ts`
 3. Export and use in auth pages via custom hook or `useSession` for state
 
+## Testing
+
+```bash
+npm run test          # vitest run (jsdom, globals)
+npm run test:watch    # watch mode
+npm run test:coverage # v8 coverage, thresholds 80% lines/branches/functions/statements
+```
+
+- Config in `vitest.config.ts` (`setupFiles: ./src/tests/setup.ts`, alias `@` → `./src`, `server-only` mock, coverage v8)
+- Global `afterEach` in `src/tests/setup.ts` does `cleanup()` + `vi.clearAllMocks()` + `vi.unstubAllGlobals()`
+- Shared `wrapper` with `retry:0` in `src/tests/utils.tsx` for hook tests
+- Mocks in `src/tests/mocks/` (`server-only`, `drizzle` QueryChain)
+
 ## Testing & Debugging Notes
 
 - **Type Safety**: Run `tsc --noEmit` locally (included in build pipeline)
